@@ -4,11 +4,12 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/google/go-github/v69/github"
 	"log"
 	"net/http"
 	"os"
 	"sync"
+
+	"github.com/google/go-github/v69/github"
 )
 
 const (
@@ -30,7 +31,14 @@ func stringOr(s *string, def string) string {
 	}
 }
 
+func addCors(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("Access-Control-Allow-Origin", "*")
+	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+}
+
 func getIssues(w http.ResponseWriter, r *http.Request) {
+	addCors(w, r)
+
 	ctx := context.Background()
 
 	repos, _, err := client.Repositories.ListByAuthenticatedUser(ctx, ghRepoUserOpt)
@@ -103,6 +111,7 @@ func main() {
 	ghIssuesRepoOpt = &github.IssueListByRepoOptions{}
 
 	mux := http.DefaultServeMux
+	mux.HandleFunc("OPTIONS /api/issues", addCors)
 	mux.HandleFunc("GET /api/issues", getIssues)
 
 	s := &http.Server{
