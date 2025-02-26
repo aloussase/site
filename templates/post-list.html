@@ -1,13 +1,14 @@
-<ul class="flex flex-col gap-2">
+<ul class="flex flex-col gap-2 md:gap-4">
     $for(posts)$
-        <li class="flex flex-col">
+        <li class="flex flex-col rounded-md bg-[#f66b6c] text-[#2e0000] shadow-[4px_4px_0_0_#000] p-2 border">
           <span class="text-lg font-bold">$title$</span>
           $date$
           $if(teaser)$
             <small>$teaser$</small>
           $endif$
-          <a href="$url$" class="button block bg-gray-400 text-white rounded-md w-fit p-1 decoration-none hover:bg-gray-300 justify-self-end">Read more</a>
+          <a href="$url$" class="button block rounded-md w-fit p-1 decoration-none justify-self-end bg-[#f66b6c] text-[#2e0000] shadow-[4px_4px_0_0_#000] hover:shadow-none hover:translate-[4px] border">
+            Read more
+          </a>
         </li>
-        $sep$<hr>
     $endfor$
 </ul>

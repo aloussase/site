@@ -23,6 +23,7 @@ h3:not(.not-title) {
 }
 
 a:not(.button) {
+  color: #f66b6c;
   text-decoration: underline;
 }
 
