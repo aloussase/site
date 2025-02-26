@@ -16,10 +16,7 @@ dev-install:
 build: tailwind
 	site clean && site build
 
-build-docker:
-	docker buildx build -t aloussase/site .
+publish:
+	docker buildx build -t aloussase/site . --push
 
-publish-docker: build-docker
-	docker push aloussase/site
-
-.PHONY: tailwind tailwind-watch dev-install build
+.PHONY: tailwind tailwind-watch dev-install build publish
