@@ -49,11 +49,12 @@ func getIssues(w http.ResponseWriter, r *http.Request) {
 	}
 
 	type issue struct {
-		Title      string `json:"title"`
-		Id         int64  `json:"id"`
-		Body       string `json:"body"`
-		Url        string `json:"url"`
-		Repository string `json:"repository"`
+		Title      string   `json:"title"`
+		Id         int64    `json:"id"`
+		Body       string   `json:"body"`
+		Url        string   `json:"url"`
+		Repository string   `json:"repository"`
+		Labels     []string `json:"labels"`
 	}
 
 	issues := make([]issue, 0, 20)
@@ -75,6 +76,11 @@ func getIssues(w http.ResponseWriter, r *http.Request) {
 					log.Printf("Failed to retrieve issues for repo %s: %v", *repo.Name, e)
 				} else {
 					for _, i := range i {
+						labels := make([]string, 0, len(i.Labels))
+						for _, l := range i.Labels {
+							labels = append(labels, *l.Name)
+						}
+
 						mutex.Lock()
 						issues = append(issues, issue{
 							Title:      *i.Title,
@@ -82,6 +88,7 @@ func getIssues(w http.ResponseWriter, r *http.Request) {
 							Body:       stringOr(i.Body, ""),
 							Url:        *i.HTMLURL,
 							Repository: *repo.Name,
+							Labels:     labels,
 						})
 						mutex.Unlock()
 					}
