@@ -26,8 +26,8 @@ pub type Model {
 }
 
 fn init(_flags) -> #(Model, effect.Effect(Msg)) {
-  // TODO: Get this from flags.
-  let api_url = "https://frustrated-functor.dev/issuesapi/api/issues"
+  // let api_url = "https://frustrated-functor.dev/issuesapi/api/issues"
+  let api_url = "http://localhost:3000/api/issues"
   #(
     Model(issues: [], current_issue: option.None, search: ""),
     api.fetch_issues(api_url),
@@ -73,7 +73,6 @@ pub fn view(model: Model) -> element.Element(Msg) {
     ]),
     view_search_bar(model),
     view_error_message(model),
-    view_issue_body(model),
     view_issues_list(model),
   ])
 }
@@ -102,28 +101,35 @@ fn view_issues_list(model: Model) -> element.Element(Msg) {
                 |> string.contains(s |> string.lowercase)
             }
           })
-          |> list.map(view_issue),
+          |> list.map(fn(issue) { view_issue(model, issue) }),
       )
     _ -> html.span([], [])
   }
 }
 
-fn view_issue(issue: Issue) -> element.Element(Msg) {
+fn view_issue(model: Model, issue: Issue) -> element.Element(Msg) {
   html.div(
     [
       attr.class(
-        "flex flex-col justify-between gap-2 shadow-md border rounded-md p-2",
+        "flex flex-col justify-between gap-2 rounded-md p-3 bg-[#f66b6c] text-[#2e0000] shadow-[4px_4px_0_0_#000] hover:shadow-none hover:translate-[4px]",
       ),
       event.on_mouse_enter(message.ShowIssueBody(issue)),
       event.on_mouse_leave(message.ClearIssueBody),
     ],
     [
-      html.span([attr.class("text-lg")], [html.text(issue.title)]),
+      html.small([], [html.text(issue.repository)]),
+      view_issue_labels(issue),
+      html.span([attr.class("font-bold")], [
+        html.text("#" <> issue.id |> int.to_string() <> " " <> issue.title),
+      ]),
+      view_issue_body(model, issue),
       html.a(
         [
           attr.href(issue.url),
           attr.target("_blank"),
-          attr.class("text-blue-400 underline"),
+          attr.class(
+            "text-[#2e0000] shadow-[4px_4px_0_0_#000] border border-black w-fit rounded self-end",
+          ),
         ],
         [html.text("See on GitHub")],
       ),
@@ -131,24 +137,25 @@ fn view_issue(issue: Issue) -> element.Element(Msg) {
   )
 }
 
-fn view_issue_body(model: Model) -> element.Element(Msg) {
+fn view_issue_labels(issue: Issue) -> element.Element(Msg) {
+  html.div(
+    [attr.class("flex gap-2")],
+    issue.labels
+      |> list.map(fn(label) {
+        html.span(
+          [attr.class("bg-[#2e0000] text-[#fdfeff] rounded-md p-1 text-xs")],
+          [html.text(label)],
+        )
+      }),
+  )
+}
+
+fn view_issue_body(model: Model, loop_issue: Issue) -> element.Element(Msg) {
+  // TODO: Make the API return the actual issue ID.
   case model {
-    Model(current_issue: option.Some(issue), ..) ->
-      html.div(
-        [
-          attr.id(issue.id |> int.to_string),
-          attr.class(
-            "border rounded-md shadow-md md:my-[10px] p-2 fixed bottom-20 z-10 bg-white w-[60%] animate-enter-from-below",
-          ),
-        ],
-        [
-          html.small([attr.class("text-gray-400")], [
-            html.text("Issue description"),
-          ]),
-          html.h2([attr.class("text-lg font-bold")], [html.text(issue.title)]),
-          html.text(issue.body),
-        ],
-      )
+    Model(current_issue: option.Some(issue), ..)
+      if issue.id == loop_issue.id && issue.repository == loop_issue.repository
+    -> html.div([attr.id(issue.id |> int.to_string)], [html.text(issue.body)])
     _ -> html.span([], [])
   }
 }

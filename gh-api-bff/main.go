@@ -50,7 +50,7 @@ func getIssues(w http.ResponseWriter, r *http.Request) {
 
 	type issue struct {
 		Title      string   `json:"title"`
-		Id         int64    `json:"id"`
+		Id         int      `json:"id"`
 		Body       string   `json:"body"`
 		Url        string   `json:"url"`
 		Repository string   `json:"repository"`
@@ -84,7 +84,7 @@ func getIssues(w http.ResponseWriter, r *http.Request) {
 						mutex.Lock()
 						issues = append(issues, issue{
 							Title:      *i.Title,
-							Id:         *i.ID,
+							Id:         *i.Number,
 							Body:       stringOr(i.Body, ""),
 							Url:        *i.HTMLURL,
 							Repository: *repo.Name,

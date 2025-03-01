@@ -12,7 +12,9 @@ pub fn fetch_issues(from api_url: String) -> effect.Effect(message.Msg) {
     use url <- decode.field("url", decode.string)
     use id <- decode.field("id", decode.int)
     use title <- decode.field("title", decode.string)
-    decode.success(Issue(body, id, title, url))
+    use repository <- decode.field("repository", decode.string)
+    use labels <- decode.field("labels", decode.list(decode.string))
+    decode.success(Issue(body, id, title, url, repository, labels))
   }
 
   let expect =
