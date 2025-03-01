@@ -35,8 +35,6 @@ pre {
 }
 
 p {
-  line-height: 2;
-
   &:not(:last-child) {
     margin-bottom: 10px;
   }

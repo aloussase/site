@@ -1,4 +1,4 @@
-<ul class="flex flex-col gap-2 md:gap-4">
+<ul class="grid grid-cols-3 gap-2 md:gap-4">
     $for(posts)$
         <li class="flex flex-col rounded-md bg-[#f66b6c] text-[#2e0000] shadow-[4px_4px_0_0_#000] p-2 border">
           <span class="text-lg font-bold">$title$</span>
@@ -6,7 +6,8 @@
           $if(teaser)$
             <small>$teaser$</small>
           $endif$
-          <a href="$url$" class="button block rounded-md w-fit p-1 decoration-none justify-self-end bg-[#f66b6c] text-[#2e0000] shadow-[4px_4px_0_0_#000] hover:shadow-none hover:translate-[4px] border">
+          <div class="flex-1"></div>
+          <a href="$url$" class="button block rounded-md w-fit p-1 decoration-none justify-self-end bg-[#f66b6c] text-[#2e0000] shadow-[4px_4px_0_0_#000] hover:shadow-none hover:translate-[4px] border self-end justify-self-end">
             Read more
           </a>
         </li>
