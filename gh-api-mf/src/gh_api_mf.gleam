@@ -26,8 +26,8 @@ pub type Model {
 }
 
 fn init(_flags) -> #(Model, effect.Effect(Msg)) {
-  // let api_url = "https://frustrated-functor.dev/issuesapi/api/issues"
-  let api_url = "http://localhost:3000/api/issues"
+  let api_url = "https://frustrated-functor.dev/issuesapi/api/issues"
+  // let api_url = "http://localhost:3000/api/issues"
   #(
     Model(issues: [], current_issue: option.None, search: ""),
     api.fetch_issues(api_url),
