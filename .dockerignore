@@ -1,5 +1,2 @@
 node_modules
-.git
-dist-newstyle
-gh-api-bff/
-gh-api-mf/
+npm-debug.log

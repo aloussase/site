@@ -1,22 +1,7 @@
-all: 
-	@echo 'tailwind - Run tailwind'
-	@echo 'tailwind-watch - Run tailwind in watch mode'
-	@echo 'dev-install - Install the site executable'
-	@echo 'build - Build the site and assets'
+build:
+	docker buildx build --platform linux/amd64,linux/arm64 -t aloussase/site:latest .
 
-tailwind:
-	npx @tailwindcss/cli -i ./css/default.css -o ./css/generated.css
+publish: build
+	docker push aloussase/site:latest
 
-tailwind-watch:
-	npx @tailwindcss/cli -i ./css/default.css -o ./css/generated.css --watch
-
-dev-install:
-	cabal install --overwrite-policy=always
-
-build: tailwind
-	site clean && site build
-
-publish:
-	docker buildx build -t aloussase/site . --push
-
-.PHONY: tailwind tailwind-watch dev-install build publish
+.PHONY: build
