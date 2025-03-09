@@ -1,11 +1,11 @@
-FROM node:latest AS builder
+FROM --platform=$TARGETPLATFORM node:latest AS builder
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
 RUN npm run build
 
-FROM node:alpine
+FROM --platform=$TARGETPLATFORM node:alpine
 WORKDIR /app
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
