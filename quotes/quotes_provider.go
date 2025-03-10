@@ -21,6 +21,10 @@ func New() QuotesProvider {
 				Quote:  "If everything is pointless, you may as well just be in a good mood anyway",
 				Author: "exurb1a",
 			},
+			{
+				Quote:  "Is this niggerlicious or is this divine intellect?",
+				Author: "Terry Davis",
+			},
 		},
 	}
 }

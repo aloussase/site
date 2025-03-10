@@ -6,8 +6,8 @@ After=network.target
 WorkingDirectory=/home/aloussase/.local/bin
 ExecStart=/home/aloussase/.local/bin/site
 Type=simple
-StandardOutput=syslog
-StandardError=syslog
+StandardOutput=journal
+StandardError=journal
 
 [Install]
 WantedBy=default.target
