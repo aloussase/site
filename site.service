@@ -1,0 +1,13 @@
+[Unit]
+Description=Frustrated Functor's Personal Website
+After=network.target
+
+[Service]
+WorkingDirectory=/home/aloussase/.local/bin
+ExecStart=/home/aloussase/.local/bin/site
+Type=simple
+StandardOutput=syslog
+StandardError=syslog
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,9 @@
+[Unit]
+Description=Watch for changes in site executable
+
+[Path]
+Unit=site.service
+PathChanged=/home/aloussase/.local/bin/site
+
+[Install]
+WantedBy=multi-user.target
