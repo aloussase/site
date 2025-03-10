@@ -1,0 +1,18 @@
+package main
+
+templ layout(title string, description string) {
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="author" content="Alexander Goussas"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			if (description != "") {
+				<meta name="description" content={ description }/>
+			}
+			<link rel="stylesheet" type="text/css" href="/assets/css/styles.css"/>
+			<title>{ title }</title>
+		</head>
+		{ children... }
+	</html>
+}

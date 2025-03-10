@@ -1,15 +1,16 @@
-FROM --platform=$TARGETPLATFORM node:latest AS builder
+FROM golang:alpine AS build
+
+ARG TARGETOS
+ARG TARGETARCH
+
 WORKDIR /app
-COPY package*.json ./
-RUN npm install
+
 COPY . .
-RUN npm run build
+RUN GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -o server .
 
-FROM --platform=$TARGETPLATFORM node:alpine
-WORKDIR /app
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/package.json ./package.json
-RUN npm install next
+FROM alpine
+COPY --from=build /app/server /server
 
-CMD ["npm", "start"]
+ENV PORT=3000
+
+ENTRYPOINT ["/server"]

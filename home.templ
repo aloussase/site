@@ -1,0 +1,55 @@
+package main
+
+import "github.com/aloussase/site/quotes"
+
+templ sectionLayout(name string) {
+	<section id={ name }>
+		{ children... }
+	</section>
+}
+
+templ about() {
+	@sectionLayout("about") {
+		<p>
+			Hello! I am a software developer from Ecuador, currently working as a consultant.
+			I am passionate about distributed systems and currently working on my bacherlor's thesis
+			on distributed tracing. Among other things, I also love functional programming and Linux.
+		</p>
+		<p>
+			My non-programming hobbies include reading, doing street photography and portraits, 
+			playing bass, cooking and playing video games from time to time.
+		</p>
+		<p>
+			If you want to chat, you can reach me at 
+			<a href="mailto:goussasalexander@gmail.com">
+				goussasalexander@gmail.com
+			</a>.
+		</p>
+	}
+}
+
+templ projects() {
+	@sectionLayout("projects") {
+	}
+}
+
+templ showQuote(quote quotes.Quote) {
+	<div id="quote">
+		<blockquote cite="{quote.Author}">
+			{ quote.Quote }
+			<span id="quote-author">{ quote.Author }</span>
+		</blockquote>
+	</div>
+}
+
+templ home(q quotes.QuotesProvider) {
+	{{ ok, randomQuote := q.RandomQuote() }}
+	@layout("Alexander Goussas | Home", "") {
+		if (ok) {
+			@showQuote(randomQuote)
+		}
+		<h1 id="home-page-title">Alexander Goussas</h1>
+		@about()
+		@projects()
+	}
+}
