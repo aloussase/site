@@ -13,6 +13,22 @@ templ layout(title string, description string) {
 			<link rel="stylesheet" type="text/css" href="/assets/css/styles.css"/>
 			<title>{ title }</title>
 		</head>
-		{ children... }
+		<body>
+			<header>
+				<nav>
+					<ul>
+						<li>Home</li>
+						<li>About</li>
+						<li>Contact</li>
+					</ul>
+				</nav>
+			</header>
+			<main>
+				{ children... }
+			</main>
+			<footer>
+				The contents of this website are &copy; 2024 Alexander Goussas
+			</footer>
+		</body>
 	</html>
 }
