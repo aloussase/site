@@ -1,0 +1,8 @@
+services:
+  site:
+    image: aloussase/site
+    build:
+      context: .
+    ports:
+      - "6002:3000"
+    container_name: site
