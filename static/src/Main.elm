@@ -6,6 +6,7 @@ import Html.Attributes as A
 import Html.Events as E
 
 
+main : Program () Model Msg
 main =
     Browser.document
         { init = init
@@ -55,9 +56,9 @@ header_ : Html Msg
 header_ =
     header
         []
-        [ h2 [] [ text "Olá, sou" ]
+        [ h2 [] [ text "Hey there! I AM" ]
         , hr [] []
-        , h1 [] [ text "Alexander Goussas" ]
+        , h1 [] [ text "ALEXANDER GOUSSAS" ]
         , shortAbout
         , nav [] [ socials ]
         ]
@@ -68,7 +69,6 @@ socials =
     let
         links =
             [ { name = "GitHub", to = "https://github.com/aloussase" }
-            , { name = "Twitter", to = "" }
             , { name = "Email", to = "mailto:goussasalexander@gmail.com" }
             ]
     in
@@ -88,6 +88,27 @@ shortAbout =
         , p [] [ text "Currently, I am working on my bachelor's thesis on distributed tracing while working as a consultant at a respectable software company TM." ]
         , p [] [ text "I love to talk all things software, so don't hesistate to reach out!" ]
         ]
+
+
+detailedAbout : Html Msg
+detailedAbout =
+    -- - kokoa
+    -- - my studies
+    -- - my work
+    -- - my hobbies
+    -- - what I'm currently doing
+    -- - what I am aiming at
+    div [] []
+
+
+interests : Html Msg
+interests =
+    div [] []
+
+
+languages : Html Msg
+languages =
+    div [] []
 
 
 posts : Html Msg
