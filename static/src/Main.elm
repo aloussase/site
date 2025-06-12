@@ -45,7 +45,8 @@ view model =
     , body =
         [ header_
         , main_ []
-            [ distSysClub
+            [ readingClub
+            , distSysClub
             , posts
             ]
         ]
@@ -115,6 +116,26 @@ distSysClub =
             , a [ A.href "https://discord.gg/QqMnGrFKxn", A.target "_blank" ] [ text "Discord server" ]
             , text "."
             ]
+        ]
+
+
+readingClub : Html Msg
+readingClub =
+    div [ A.class "reading-club" ]
+        [ h3 [] [ text "Reading Club in Guayaquil" ]
+        , p [] [ text "I have a reading club in Guayaquil where we focus on non-technical books. Join us!" ]
+        , iframe
+            [ A.src "https://lu.ma/embed/event/evt-oP8g727jxQbyFP4/simple"
+            , A.width 960
+            , A.height 400
+            , A.attribute "framborder" "0"
+            , A.style "border" "1px solid #bfcbda88"
+            , A.style "border-radius" "4px"
+            , A.attribute "allowfullscreen" ""
+            , A.attribute "aria-hidden" "false"
+            , A.tabindex 0
+            ]
+            []
         ]
 
 
